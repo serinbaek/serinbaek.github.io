@@ -6,6 +6,15 @@
     <title>Serin Baek</title>
     <link rel="icon" href="logo.png" type="image/png">
     <style>
+        /* Layout for Photo and Bubble */
+        .profile-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
         /* Speech Bubble Styling */
         .speech-bubble {
             position: relative;
@@ -13,32 +22,30 @@
             border-radius: 15px;
             padding: 15px 25px;
             display: inline-block;
-            margin-bottom: 25px;
         }
         
-        /* The little triangle pointing down */
+        /* Triangle pointing left towards the photo */
         .speech-bubble:after {
             content: '';
             position: absolute;
-            bottom: 0;
-            left: 50%;
+            top: 50%;
+            left: -15px;
             width: 0;
             height: 0;
             border: 15px solid transparent;
-            border-top-color: #f0f0f0;
-            border-bottom: 0;
-            margin-left: -15px;
-            margin-bottom: -15px;
+            border-right-color: #f0f0f0;
+            border-left: 0;
+            margin-top: -15px;
         }
 
-        /* Typewriter animation without bold */
+        /* Typewriter animation */
         .typewriter p {
             overflow: hidden; 
             border-right: 0.15em solid black; 
             white-space: nowrap; 
             margin: 0; 
             font-size: 22px;
-            font-weight: normal; /* Removed bold */
+            font-weight: normal; 
             width: 0;
             animation: 
                 typing 1.2s steps(10, end) forwards,
@@ -65,17 +72,18 @@
         <a href="projects.html" style="font-size: 18px; text-decoration: none; color: blue;">Projects</a>
     </nav>
 
-    <!-- Speech Bubble containing the Typewriter Text -->
-    <div class="speech-bubble">
-        <div class="typewriter">
-            <p>Welcome!</p>
+    <!-- Profile Container: Photo and Bubble side-by-side -->
+    <div class="profile-container">
+        <!-- Profile Photo -->
+        <img src="Serin_profile.jpg" alt="Serin Baek" width="500" style="border-radius: 20%;">
+
+        <!-- Speech Bubble -->
+        <div class="speech-bubble">
+            <div class="typewriter">
+                <p>Welcome!</p>
+            </div>
         </div>
     </div>
-    
-    <br>
-
-    <!-- Profile Photo -->
-    <img src="Serin_profile.jpg" alt="Serin Baek" width="250" style="border-radius: 20%; margin-bottom: 10px;">
 
     <h1><strong>Serin Baek</strong></h1>
     
@@ -85,6 +93,22 @@
         <a href="CV.pdf" target="_blank"><button style="padding: 12px 24px; font-size: 16px; cursor: pointer; margin-right: 15px;">CV</button></a>
         <a href="https://www.linkedin.com/in/serin-baek-0a2bb2292" target="_blank"><button style="padding: 12px 24px; font-size: 16px; cursor: pointer;">LinkedIn</button></a>
     </p>
+
+    <!-- Divider Line -->
+    <hr style="margin: 50px 0 30px 0; border: 0; border-top: 1px solid #ddd;">
+
+    <!-- Personal Story Section -->
+    <div style="text-align: left;">
+        <h2 style="font-size: 22px; margin-bottom: 15px;">My Journey</h2>
+        
+        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
+            Volunteering at mobile clinics in Cambodia during my gap year exposed me to the realities of untreatable diseases, inspiring me to study pharmacology at UCL. Returning a year later to an oncology ward, I watched patients share laughter in the waiting room—only to realize many had visible, late-stage tumors and mere months to live. This stark contrast highlighted the urgent need for early cancer diagnostics and global healthcare equity, which drove my research at the Early Cancer Institute in Cambridge.
+        </p>
+        
+        <p style="font-size: 16px; line-height: 1.6;">
+            Back in London, my work with homeless communities revealed that severe healthcare inequality exists locally, too. I dream of a world where everyone has an equal opportunity to live a healthy life. Driven by this vision, I have expanded my focus to rare diseases, and I am currently investigating CFTR replacement gene therapies for cystic fibrosis patients with mutations that produce no CFTR at all.
+        </p>
+    </div>
     
 </body>
 </html>
