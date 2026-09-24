@@ -4,18 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serin Baek</title>
+    <!-- Loads the 3Dmol.js library for the interactive protein model -->
+    <script src="https://3Dmol.csb.pitt.edu/build/3Dmol-min.js"></script>
 </head>
-<body>
-    <!-- Your Profile Photo -->
-    <img src="Serin_profile.jpg" alt="Serin Baek" width="300">
+<body style="font-family: Arial, sans-serif; max-width: 800px; margin: 0 auto; padding: 20px;">
+    
+    <!-- Profile Photo -->
+    <img src="Serin_profile" alt="Serin Baek" width="400" style="border-radius: 20%;">
 
     <h1><strong>Serin Baek</strong></h1>
     <p>I am a final year MSci Pharmacology student at University College London. My current master's project is on bioelectric profiling of airway epithelial cells, looking into how ion channel properties and gap junction coupling could be a potential target for gene therapy for cystic fibrosis patients.</p>
 
-    <!-- Clickable Buttons for CV and LinkedIn -->
+    <!-- Buttons -->
     <p>
         <a href="CV.pdf" target="_blank"><button style="padding: 10px 20px; font-size: 16px; cursor: pointer; margin-right: 10px;">View My CV</button></a>
         <a href="https://www.linkedin.com/in/serin-baek-0a2bb2292" target="_blank"><button style="padding: 10px 20px; font-size: 16px; cursor: pointer;">LinkedIn</button></a>
     </p>
+
+    <hr style="margin: 40px 0; border: 1px solid #ddd;">
+
+    <!-- 1. Electrophysiology Trace Art -->
+    <h2>Electrophysiology of Ion Channels</h2>
+    <div style="background-color: #0d1117; padding: 40px 0; text-align: center; border-radius: 10px;">
+        <svg width="100%" height="150" viewBox="0 0 500 150" xmlns="http://www.w3.org/2000/svg">
+            <!-- Glowing Voltage Steps -->
+            <path d="M50,120 L150,120 L150,30 L350,30 L350,120 L450,120" fill="none" stroke="#00ffcc" stroke-width="3" style="filter: drop-shadow(0px 0px 8px #00ffcc);" />
+            <path d="M50,120 L150,120 L150,60 L350,60 L350,120 L450,120" fill="none" stroke="#00aaff" stroke-width="3" style="filter: drop-shadow(0px 0px 8px #00aaff); opacity: 0.8;" />
+            <path d="M50,120 L150,120 L150,90 L350,90 L350,120 L450,120" fill="none" stroke="#ff007f" stroke-width="3" style="filter: drop-shadow(0px 0px 8px #ff007f); opacity: 0.6;" />
+        </svg>
+    </div>
+
+    <!-- 2. Interactive 3D Protein Model -->
+    <h2>CFTR Ion Channel Structure</h2>
+    <p>Interactive 3D model of the human Cystic Fibrosis Transmembrane Conductance Regulator (CFTR). Click and drag to rotate, scroll to zoom.</p>
+    
+    <!-- 3D Viewer Container. data-pdb="5UAK" pulls the specific CFTR structure -->
+    <div style="height: 400px; width: 100%; border-radius: 10px; overflow: hidden; background-color: #1e1e1e;" 
+         class="viewer_3Dmoljs" 
+         data-pdb="5UAK" 
+         data-backgroundcolor="#1e1e1e" 
+         data-style="cartoon:color=spectrum">
+    </div>
+
 </body>
 </html>
