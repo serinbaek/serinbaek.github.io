@@ -8,23 +8,24 @@
     <style>
         /* Layout for Photo and Bubble */
         .profile-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 30px;
+            position: relative;
+            display: inline-block; /* Hugs the image tightly */
             margin-bottom: 20px;
         }
 
-        /* Speech Bubble Styling */
+        /* Speech Bubble Styling (Absolutely positioned over the image) */
         .speech-bubble {
-            position: relative;
+            position: absolute;
+            top: 25%;   /* Adjust this value up or down to align perfectly with your head */
+            right: 5%;  /* Adjust this value left or right */
             background: #f0f0f0;
             border-radius: 15px;
             padding: 15px 25px;
-            display: inline-block;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* Shadow to make it pop over the image */
+            z-index: 10;
         }
         
-        /* Triangle pointing left towards the photo */
+        /* Triangle pointing left towards the head */
         .speech-bubble:after {
             content: '';
             position: absolute;
@@ -72,12 +73,12 @@
         <a href="projects.html" style="font-size: 18px; text-decoration: none; color: blue;">Projects</a>
     </nav>
 
-    <!-- Profile Container: Photo and Bubble side-by-side -->
+    <!-- Profile Container: Photo and Overlapping Bubble -->
     <div class="profile-container">
         <!-- Profile Photo -->
-        <img src="Serin_profile.jpg" alt="Serin Baek" width="500" style="border-radius: 20%;">
+        <img src="Serin_profile.jpg" alt="Serin Baek" width="500" style="border-radius: 20%; display: block;">
 
-        <!-- Speech Bubble -->
+        <!-- Speech Bubble (Now floats over the image) -->
         <div class="speech-bubble">
             <div class="typewriter">
                 <p>Welcome!</p>
