@@ -6,13 +6,39 @@
     <title>Serin Baek</title>
     <link rel="icon" href="logo.png" type="image/png">
     <style>
-        /* Typewriter animation */
-        .typewriter h2 {
+        /* Speech Bubble Styling */
+        .speech-bubble {
+            position: relative;
+            background: #f0f0f0;
+            border-radius: 15px;
+            padding: 15px 25px;
+            display: inline-block;
+            margin-bottom: 25px;
+        }
+        
+        /* The little triangle pointing down */
+        .speech-bubble:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 0;
+            border: 15px solid transparent;
+            border-top-color: #f0f0f0;
+            border-bottom: 0;
+            margin-left: -15px;
+            margin-bottom: -15px;
+        }
+
+        /* Typewriter animation without bold */
+        .typewriter p {
             overflow: hidden; 
             border-right: 0.15em solid black; 
             white-space: nowrap; 
-            margin: 0 auto 30px auto; 
-            font-size: 28px;
+            margin: 0; 
+            font-size: 22px;
+            font-weight: normal; /* Removed bold */
             width: 0;
             animation: 
                 typing 1.2s steps(10, end) forwards,
@@ -32,20 +58,24 @@
 </head>
 <body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
     
-    <!-- Navigation Menu connecting your pages -->
+    <!-- Navigation Menu -->
     <nav style="margin-bottom: 40px;">
         <a href="index.html" style="margin-right: 20px; font-size: 18px; text-decoration: none; color: black;"><strong>About</strong></a>
         <a href="bsc-thesis.html" style="margin-right: 20px; font-size: 18px; text-decoration: none; color: blue;">BSc Thesis</a>
         <a href="projects.html" style="font-size: 18px; text-decoration: none; color: blue;">Projects</a>
     </nav>
 
-    <!-- Typewriter Welcome Sign -->
-    <div class="typewriter">
-        <h2>Welcome!</h2>
+    <!-- Speech Bubble containing the Typewriter Text -->
+    <div class="speech-bubble">
+        <div class="typewriter">
+            <p>Welcome!</p>
+        </div>
     </div>
+    
+    <br>
 
     <!-- Profile Photo -->
-    <img src="Serin_profile.jpg" alt="Serin Baek" width="550" style="border-radius: 20%; margin-bottom: 10px;">
+    <img src="Serin_profile.jpg" alt="Serin Baek" width="250" style="border-radius: 20%; margin-bottom: 10px;">
 
     <h1><strong>Serin Baek</strong></h1>
     
