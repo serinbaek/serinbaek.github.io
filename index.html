@@ -4,9 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Serin Baek</title>
-    <link rel="icon" href="CFTR.png" type="image/png">
+    <link rel="icon" href="logo.png" type="image/png">
+    <style>
+        /* Typewriter animation */
+        .typewriter h2 {
+            overflow: hidden; 
+            border-right: 0.15em solid black; 
+            white-space: nowrap; 
+            margin: 0 auto 30px auto; 
+            font-size: 28px;
+            width: 0;
+            animation: 
+                typing 1.2s steps(10, end) forwards,
+                blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 8.5ch }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: black; }
+        }
+    </style>
 </head>
-<!-- Center alignment and margin applied to the whole body -->
 <body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
     
     <!-- Navigation Menu connecting your pages -->
@@ -16,16 +39,18 @@
         <a href="projects.html" style="font-size: 18px; text-decoration: none; color: blue;">Projects</a>
     </nav>
 
-    <!-- Profile Photo (Location centered by body tag, width adjusted) -->
+    <!-- Typewriter Welcome Sign -->
+    <div class="typewriter">
+        <h2>Welcome!</h2>
+    </div>
+
+    <!-- Profile Photo -->
     <img src="Serin_profile.jpg" alt="Serin Baek" width="550" style="border-radius: 20%; margin-bottom: 10px;">
 
-    <!-- Font sizes adjusted using style="font-size: Xpx;" -->
-    <h1 style="font-size: 32px; margin-bottom: 5px;"><strong>Serin Baek</strong></h1>
+    <h1><strong>Serin Baek</strong></h1>
     
-    <!-- Text aligned left for readability, font size adjusted -->
     <p style="font-size: 16px; text-align: left; line-height: 1.5;">I am a final year MSci Pharmacology student at University College London. My current master's project is on bioelectric profiling of airway epithelial cells, looking into how ion channel properties and gap junction coupling could be a potential target for gene therapy for cystic fibrosis patients.</p>
 
-    <!-- Button sizes adjusted via padding and font-size -->
     <p style="margin-top: 30px;">
         <a href="CV.pdf" target="_blank"><button style="padding: 12px 24px; font-size: 16px; cursor: pointer; margin-right: 15px;">CV</button></a>
         <a href="https://www.linkedin.com/in/serin-baek-0a2bb2292" target="_blank"><button style="padding: 12px 24px; font-size: 16px; cursor: pointer;">LinkedIn</button></a>
