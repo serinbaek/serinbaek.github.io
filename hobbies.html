@@ -93,26 +93,47 @@
             animation: spin 3s linear infinite;
         }
 
-        /* Draggable CD Card */
-        .cd-case {
-            background: #f1f3f5;
-            border: 2px dashed #adb5bd;
-            border-radius: 12px;
-            padding: 15px;
-            width: 260px;
+        /* Round Draggable CD */
+        .draggable-cd {
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle, #111 30%, #222 31%, #111 32%, #000 65%, #222 66%, #111 70%);
+            border-radius: 50%;
             margin: 20px auto;
+            position: relative;
+            box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: grab;
             user-select: none;
-            transition: transform 0.2s, background 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: 2px solid #444;
         }
 
-        .cd-case:active {
+        .draggable-cd:active {
             cursor: grabbing;
+            transform: scale(0.95);
         }
 
-        .cd-case:hover {
-            background: #e9ecef;
-            border-color: #6c757d;
+        .draggable-cd:hover {
+            box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+        }
+
+        .cd-inner-label {
+            width: 42px;
+            height: 42px;
+            background: #b22222;
+            border-radius: 50%;
+            border: 2px dashed #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 8px;
+            font-weight: bold;
+            text-align: center;
+            padding: 2px;
         }
 
         .controls {
@@ -146,12 +167,12 @@
     </div>
 
     <h1 style="font-size: 32px; margin-bottom: 5px;"><strong>Classical Music Corner</strong></h1>
-    <p style="color: #666; margin-bottom: 10px;">Drag the CD onto the turntable below to play!</p>
+    <p style="color: #666; margin-bottom: 5px;">Drag the round CD onto the turntable below to play!</p>
+    <p style="font-size: 13px; color: #888; margin-bottom: 15px;">Rachmaninov: Symphony No. 2 (III. Adagio)</p>
 
-    <!-- Draggable CD Item -->
-    <div class="cd-case" draggable="true" id="cdItem" ondragstart="drag(event)">
-        <p style="margin: 0; font-weight: bold; font-size: 14px;">Rachmaninov: Symphony No. 2</p>
-        <p style="margin: 5px 0 0 0; font-size: 12px; color: #555;">III. Adagio</p>
+    <!-- Round Draggable CD -->
+    <div class="draggable-cd" draggable="true" id="cdItem" ondragstart="drag(event)" title="Drag onto turntable">
+        <div class="cd-inner-label">Rach 2</div>
     </div>
 
     <!-- Turntable Player (Drop Zone) -->
