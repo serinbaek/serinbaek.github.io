@@ -39,7 +39,7 @@
             width: 320px;
             height: 320px;
             border-radius: 20px;
-            margin: 30px auto;
+            margin: 30px auto 20px auto;
             position: relative;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             display: flex;
@@ -70,7 +70,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 11px;
+            font-size: 10px;
             font-weight: bold;
             text-align: center;
             padding: 5px;
@@ -108,6 +108,10 @@
         .cd-selector {
             margin: 20px 0;
         }
+
+        #youtube-container {
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
@@ -121,7 +125,7 @@
     </div>
 
     <h1 style="font-size: 32px; margin-bottom: 5px;"><strong>Classical Music Corner</strong></h1>
-    <p style="color: #666; margin-bottom: 20px;">Load a CD onto the turntable and enjoy some timeless classical pieces.</p>
+    <p style="color: #666; margin-bottom: 20px;">Load a CD onto the turntable to play classical tracks via YouTube.</p>
 
     <!-- Turntable Player -->
     <div class="turntable-container">
@@ -136,76 +140,52 @@
     <!-- CD Selector Buttons -->
     <div class="cd-selector">
         <p style="font-weight: bold; margin-bottom: 8px;">Select a CD:</p>
-        <button class="btn-control" onclick="loadCD('Beethoven', 'Moonlight Sonata', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Beethoven_Moonlight_1st_movement.ogg')">CD 1: Beethoven - Moonlight Sonata</button>
-        <button class="btn-control" onclick="loadCD('Bach', 'Goldberg Variations', 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Goldberg_Variations%2C_BWV_988_-_01_-_Aria_%28Harpsichord%29.ogg')">CD 2: Bach - Goldberg Variations</button>
-        <button class="btn-control" onclick="loadCD('Chopin', 'Nocturne Op. 9 No. 2', 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chopin_Nocturne_op_9_no_2_E_flat_major.ogg')">CD 3: Chopin - Nocturne</button>
+        <button class="btn-control" onclick="loadCD('Hayato Sumino', 'Rachmaninov Adagio', 'OS4NsKxXGDc')">CD 1: Rachmaninov - Symphony No. 2 (Adagio)</button>
+        <button class="btn-control" onclick="loadCD('Beethoven', 'Moonlight Sonata', '4Tr0otuiQuU')">CD 2: Beethoven - Moonlight Sonata</button>
+        <button class="btn-control" onclick="loadCD('Chopin', 'Nocturne Op. 9 No. 2', '9E6c8y5Bqps')">CD 3: Chopin - Nocturne</button>
     </div>
 
     <!-- Playback Controls -->
     <div class="controls">
-        <button class="btn-control" onclick="togglePlay()" style="background: #212529; color: white;">Play / Pause</button>
+        <button class="btn-control" onclick="stopMusic()" style="background: #212529; color: white;">Stop Music</button>
         <button class="btn-control" onclick="playRandomCD()">🎲 Random Classical Track</button>
     </div>
 
-    <!-- Hidden Audio Element -->
-    <audio id="audioPlayer" onended="stopRotation()"></audio>
+    <!-- Embedded YouTube Player -->
+    <div id="youtube-container">
+        <iframe id="ytPlayer" width="300" height="80" src="" frameborder="0" allow="autoplay"></iframe>
+    </div>
 
     <script>
-        const audio = document.getElementById('audioPlayer');
         const vinyl = document.getElementById('vinylRecord');
         const cdLabel = document.getElementById('cdLabel');
         const nowPlaying = document.getElementById('nowPlaying');
-        let isPlaying = false;
+        const ytPlayer = document.getElementById('ytPlayer');
 
         const cds = [
-            { composer: 'Beethoven', title: 'Moonlight Sonata', url: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Beethoven_Moonlight_1st_movement.ogg' },
-            { composer: 'Bach', title: 'Goldberg Variations', url: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Goldberg_Variations%2C_BWV_988_-_01_-_Aria_%28Harpsichord%29.ogg' },
-            { composer: 'Chopin', title: 'Nocturne Op. 9', url: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chopin_Nocturne_op_9_no_2_E_flat_major.ogg' }
+            { composer: 'Hayato Sumino', title: 'Rachmaninov Adagio', id: 'OS4NsKxXGDc' },
+            { composer: 'Beethoven', title: 'Moonlight Sonata', id: '4Tr0otuiQuU' },
+            { composer: 'Chopin', title: 'Nocturne Op. 9', id: '9E6c8y5Bqps' }
         ];
 
-        function loadCD(composer, title, url) {
-            audio.src = url;
-            audio.load(); 
+        function loadCD(composer, title, videoId) {
+            ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
             cdLabel.innerHTML = `${composer}<br>${title}`;
-            nowPlaying.innerText = `Loaded: ${composer} - ${title} (Press Play)`;
-            
-            vinyl.classList.remove('spinning');
-            isPlaying = false;
+            nowPlaying.innerText = `Playing: ${composer} - ${title}`;
+            vinyl.classList.add('spinning');
         }
 
-        function togglePlay() {
-            if (!audio.src) {
-                alert('Please select a CD first!');
-                return;
-            }
-            if (isPlaying) {
-                audio.pause();
-                vinyl.classList.remove('spinning');
-                nowPlaying.innerText = `Paused`;
-                isPlaying = false;
-            } else {
-                audio.play().then(() => {
-                    vinyl.classList.add('spinning');
-                    isPlaying = true;
-                    nowPlaying.innerText = `Playing...`;
-                }).catch(error => {
-                    console.log("Playback failed:", error);
-                    alert("Click OK to allow audio playback.");
-                });
-            }
+        function stopMusic() {
+            ytPlayer.src = ""; 
+            vinyl.classList.remove('spinning');
+            cdLabel.innerHTML = "No CD Loaded";
+            nowPlaying.innerText = `Status: Stopped`;
         }
 
         function playRandomCD() {
             const randomIndex = Math.floor(Math.random() * cds.length);
             const selectedCD = cds[randomIndex];
-            loadCD(selectedCD.composer, selectedCD.title, selectedCD.url);
-            setTimeout(() => { togglePlay(); }, 300);
-        }
-
-        function stopRotation() {
-            vinyl.classList.remove('spinning');
-            isPlaying = false;
-            nowPlaying.innerText = `Finished`;
+            loadCD(selectedCD.composer, selectedCD.title, selectedCD.id);
         }
     </script>
 </body>
