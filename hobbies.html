@@ -165,11 +165,18 @@
 
         function loadCD(composer, title, url) {
             audio.src = url;
+            audio.load(); // Forces the browser to load the new source
             cdLabel.innerHTML = `${composer}<br>${title}`;
             nowPlaying.innerText = `Loaded: ${composer} - ${title}`;
-            audio.play();
-            vinyl.classList.add('spinning');
-            isPlaying = true;
+            
+            // Safely handle the play promise to prevent browser blocking
+            audio.play().then(() => {
+                vinyl.classList.add('spinning');
+                isPlaying = true;
+            }).catch(error => {
+                console.log("Playback blocked or failed:", error);
+                nowPlaying.innerText = `Paused (Click Play)`;
+            });
         }
 
         function togglePlay() {
@@ -183,10 +190,13 @@
                 nowPlaying.innerText = `Paused`;
                 isPlaying = false;
             } else {
-                audio.play();
-                vinyl.classList.add('spinning');
-                nowPlaying.innerText = `Playing...`;
-                isPlaying = true;
+                audio.play().then(() => {
+                    vinyl.classList.add('spinning');
+                    isPlaying = true;
+                    nowPlaying.innerText = `Playing...`;
+                }).catch(error => {
+                    console.log("Playback failed:", error);
+                });
             }
         }
 
