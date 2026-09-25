@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hobbies - Serin Baek</title>
+    <link rel="icon" href="CFTR.png" type="image/png">
+    <style>
+        .nav-bar {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid #eaeaea;
+        }
+        .nav-bar a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #666;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.2s ease-in-out;
+            margin: 0 4px;
+        }
+        .nav-bar a:hover {
+            color: #000;
+            background: #e9ecef;
+        }
+        .nav-bar a.active {
+            color: #fff;
+            background: #212529;
+            font-weight: bold;
+        }
+
+        /* Record Player Styling */
+        .turntable-container {
+            background: #222;
+            width: 320px;
+            height: 320px;
+            border-radius: 20px;
+            margin: 30px auto;
+            position: relative;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #444;
+        }
+
+        .vinyl {
+            width: 280px;
+            height: 280px;
+            background: radial-gradient(circle, #111 30%, #222 31%, #111 32%, #000 65%, #222 66%, #111 70%);
+            border-radius: 50%;
+            position: relative;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .vinyl-label {
+            width: 100px;
+            height: 100px;
+            background: #b22222;
+            border-radius: 50%;
+            border: 3px dashed #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            text-align: center;
+            padding: 5px;
+        }
+
+        /* Spin Animation */
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .spinning {
+            animation: spin 3s linear infinite;
+        }
+
+        .controls {
+            margin-top: 20px;
+        }
+
+        .btn-control {
+            padding: 10px 20px;
+            font-size: 15px;
+            cursor: pointer;
+            border-radius: 6px;
+            border: 1px solid #ccc;
+            background: #f8f9fa;
+            margin: 5px;
+            transition: background 0.2s;
+        }
+
+        .btn-control:hover {
+            background: #e2e8f0;
+        }
+
+        .cd-selector {
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
+    
+    <!-- Navigation Menu -->
+    <div class="nav-bar">
+        <a href="index.html">About</a>
+        <a href="bsc-thesis.html">BSc Thesis</a>
+        <a href="projects.html">Projects</a>
+        <a href="hobbies.html" class="active">Hobbies</a>
+    </div>
+
+    <h1 style="font-size: 32px; margin-bottom: 5px;"><strong>Classical Music Corner</strong></h1>
+    <p style="color: #666; margin-bottom: 20px;">Load a CD onto the turntable and enjoy some timeless classical pieces.</p>
+
+    <!-- Turntable Player -->
+    <div class="turntable-container">
+        <div class="vinyl" id="vinylRecord">
+            <div class="vinyl-label" id="cdLabel">No CD Loaded</div>
+        </div>
+    </div>
+
+    <!-- Now Playing Display -->
+    <p id="nowPlaying" style="font-style: italic; color: #444; font-size: 16px; margin-bottom: 15px;">Status: Stopped</p>
+
+    <!-- CD Selector Buttons -->
+    <div class="cd-selector">
+        <p style="font-weight: bold; margin-bottom: 8px;">Select a CD:</p>
+        <button class="btn-control" onclick="loadCD('Beethoven', 'Moonlight Sonata', 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Beethoven_Moonlight_1st_movement.ogg')">CD 1: Beethoven - Moonlight Sonata</button>
+        <button class="btn-control" onclick="loadCD('Bach', 'Goldberg Variations', 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Goldberg_Variations%2C_BWV_988_-_01_-_Aria_%28Harpsichord%29.ogg')">CD 2: Bach - Goldberg Variations</button>
+        <button class="btn-control" onclick="loadCD('Chopin', 'Nocturne Op. 9 No. 2', 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chopin_Nocturne_op_9_no_2_E_flat_major.ogg')">CD 3: Chopin - Nocturne</button>
+    </div>
+
+    <!-- Playback Controls -->
+    <div class="controls">
+        <button class="btn-control" onclick="togglePlay()" style="background: #212529; color: white;">Play / Pause</button>
+        <button class="btn-control" onclick="playRandomCD()">🎲 Random Classical Track</button>
+    </div>
+
+    <!-- Hidden Audio Element -->
+    <audio id="audioPlayer" onended="stopRotation()"></audio>
+
+    <script>
+        const audio = document.getElementById('audioPlayer');
+        const vinyl = document.getElementById('vinylRecord');
+        const cdLabel = document.getElementById('cdLabel');
+        const nowPlaying = document.getElementById('nowPlaying');
+        let isPlaying = false;
+
+        const cds = [
+            { composer: 'Beethoven', title: 'Moonlight Sonata', url: 'https://upload.wikimedia.org/wikipedia/commons/c/c3/Beethoven_Moonlight_1st_movement.ogg' },
+            { composer: 'Bach', title: 'Goldberg Variations', url: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Goldberg_Variations%2C_BWV_988_-_01_-_Aria_%28Harpsichord%29.ogg' },
+            { composer: 'Chopin', title: 'Nocturne Op. 9', url: 'https://upload.wikimedia.org/wikipedia/commons/e/ef/Chopin_Nocturne_op_9_no_2_E_flat_major.ogg' }
+        ];
+
+        function loadCD(composer, title, url) {
+            audio.src = url;
+            cdLabel.innerHTML = `${composer}<br>${title}`;
+            nowPlaying.innerText = `Loaded: ${composer} - ${title}`;
+            audio.play();
+            vinyl.classList.add('spinning');
+            isPlaying = true;
+        }
+
+        function togglePlay() {
+            if (!audio.src) {
+                alert('Please load a CD first!');
+                return;
+            }
+            if (isPlaying) {
+                audio.pause();
+                vinyl.classList.remove('spinning');
+                nowPlaying.innerText = `Paused`;
+                isPlaying = false;
+            } else {
+                audio.play();
+                vinyl.classList.add('spinning');
+                nowPlaying.innerText = `Playing...`;
+                isPlaying = true;
+            }
+        }
+
+        function playRandomCD() {
+            const randomIndex = Math.floor(Math.random() * cds.length);
+            const selectedCD = cds[randomIndex];
+            loadCD(selectedCD.composer, selectedCD.title, selectedCD.url);
+        }
+
+        function stopRotation() {
+            vinyl.classList.remove('spinning');
+            isPlaying = false;
+            nowPlaying.innerText = `Finished`;
+        }
+    </script>
+</body>
+</html>
