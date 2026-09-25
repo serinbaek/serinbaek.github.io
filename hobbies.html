@@ -165,23 +165,17 @@
 
         function loadCD(composer, title, url) {
             audio.src = url;
-            audio.load(); // Forces the browser to load the new source
+            audio.load(); 
             cdLabel.innerHTML = `${composer}<br>${title}`;
-            nowPlaying.innerText = `Loaded: ${composer} - ${title}`;
+            nowPlaying.innerText = `Loaded: ${composer} - ${title} (Press Play)`;
             
-            // Safely handle the play promise to prevent browser blocking
-            audio.play().then(() => {
-                vinyl.classList.add('spinning');
-                isPlaying = true;
-            }).catch(error => {
-                console.log("Playback blocked or failed:", error);
-                nowPlaying.innerText = `Paused (Click Play)`;
-            });
+            vinyl.classList.remove('spinning');
+            isPlaying = false;
         }
 
         function togglePlay() {
             if (!audio.src) {
-                alert('Please load a CD first!');
+                alert('Please select a CD first!');
                 return;
             }
             if (isPlaying) {
@@ -196,6 +190,7 @@
                     nowPlaying.innerText = `Playing...`;
                 }).catch(error => {
                     console.log("Playback failed:", error);
+                    alert("Click OK to allow audio playback.");
                 });
             }
         }
@@ -204,6 +199,7 @@
             const randomIndex = Math.floor(Math.random() * cds.length);
             const selectedCD = cds[randomIndex];
             loadCD(selectedCD.composer, selectedCD.title, selectedCD.url);
+            setTimeout(() => { togglePlay(); }, 300);
         }
 
         function stopRotation() {
