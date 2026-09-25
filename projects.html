@@ -5,15 +5,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Serin Baek</title>
     <link rel="icon" href="CFTR.png" type="image/png">
+    <style>
+        .nav-bar {
+            margin-bottom: 40px;
+            background: #f8f9fa;
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 30px;
+            border: 1px solid #eaeaea;
+        }
+        .nav-bar a {
+            text-decoration: none;
+            font-size: 16px;
+            color: #666;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.2s ease-in-out;
+            margin: 0 4px;
+        }
+        .nav-bar a:hover {
+            color: #000;
+            background: #e9ecef;
+        }
+        .nav-bar a.active {
+            color: #fff;
+            background: #212529;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
     
-    <!-- Navigation Menu connecting your pages -->
-    <nav style="margin-bottom: 40px;">
-        <a href="index.html" style="margin-right: 20px; font-size: 18px; text-decoration: none; color: blue;">About</a>
-        <a href="bsc-thesis.html" style="margin-right: 20px; font-size: 18px; text-decoration: none; color: blue;">BSc Thesis</a>
-        <a href="projects.html" style="font-size: 18px; text-decoration: none; color: black;"><strong>Projects</strong></a>
-    </nav>
+    <!-- Navigation Menu -->
+    <div class="nav-bar">
+        <a href="index.html">About</a>
+        <a href="bsc-thesis.html">BSc Thesis</a>
+        <a href="projects.html" class="active">Projects</a>
+    </div>
 
     <!-- Page Header -->
     <h1 style="font-size: 32px; margin-bottom: 5px;"><strong>Projects</strong></h1>
