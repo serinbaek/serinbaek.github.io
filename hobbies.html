@@ -7,7 +7,7 @@
     <link rel="icon" href="CFTR.png" type="image/png">
     <style>
         .nav-bar {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             background: #f8f9fa;
             display: inline-block;
             padding: 8px 16px;
@@ -33,19 +33,24 @@
             font-weight: bold;
         }
 
-        /* Record Player Styling */
+        /* Record Player / Drop Zone Styling */
         .turntable-container {
             background: #222;
             width: 320px;
             height: 320px;
             border-radius: 20px;
-            margin: 30px auto 20px auto;
+            margin: 20px auto;
             position: relative;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             display: flex;
             align-items: center;
             justify-content: center;
             border: 4px solid #444;
+            transition: border-color 0.2s;
+        }
+
+        .turntable-container.drag-over {
+            border-color: #b22222;
         }
 
         .vinyl {
@@ -86,6 +91,28 @@
             animation: spin 3s linear infinite;
         }
 
+        /* Draggable CD Card */
+        .cd-case {
+            background: #f1f3f5;
+            border: 2px dashed #adb5bd;
+            border-radius: 12px;
+            padding: 15px;
+            width: 260px;
+            margin: 20px auto;
+            cursor: grab;
+            user-select: none;
+            transition: transform 0.2s, background 0.2s;
+        }
+
+        .cd-case:active {
+            cursor: grabbing;
+        }
+
+        .cd-case:hover {
+            background: #e9ecef;
+            border-color: #6c757d;
+        }
+
         .controls {
             margin-top: 20px;
         }
@@ -104,14 +131,6 @@
         .btn-control:hover {
             background: #e2e8f0;
         }
-
-        .cd-selector {
-            margin: 20px 0;
-        }
-
-        #youtube-container {
-            margin-top: 20px;
-        }
     </style>
 </head>
 <body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
@@ -125,67 +144,102 @@
     </div>
 
     <h1 style="font-size: 32px; margin-bottom: 5px;"><strong>Classical Music Corner</strong></h1>
-    <p style="color: #666; margin-bottom: 20px;">Load a CD onto the turntable to play classical tracks via YouTube.</p>
+    <p style="color: #666; margin-bottom: 10px;">Drag the CD onto the turntable below to play!</p>
 
-    <!-- Turntable Player -->
-    <div class="turntable-container">
+    <!-- Draggable CD Item -->
+    <div class="cd-case" draggable="true" id="cdItem" ondragstart="drag(event)">
+        <p style="margin: 0; font-weight: bold; font-size: 14px;">💿 Rachmaninov: Symphony No. 2</p>
+        <p style="margin: 5px 0 0 0; font-size: 12px; color: #555;">III. Adagio (Hayato Sumino Piano Arr.)</p>
+    </div>
+
+    <!-- Turntable Player (Drop Zone) -->
+    <div class="turntable-container" id="turntable" ondragover="allowDrop(event)" ondragleave="removeHighlight(event)" ondrop="dropCD(event)">
         <div class="vinyl" id="vinylRecord">
-            <div class="vinyl-label" id="cdLabel">No CD Loaded</div>
+            <div class="vinyl-label" id="cdLabel">Drop CD Here</div>
         </div>
     </div>
 
     <!-- Now Playing Display -->
-    <p id="nowPlaying" style="font-style: italic; color: #444; font-size: 16px; margin-bottom: 15px;">Status: Stopped</p>
-
-    <!-- CD Selector Buttons -->
-    <div class="cd-selector">
-        <p style="font-weight: bold; margin-bottom: 8px;">Select a CD:</p>
-        <button class="btn-control" onclick="loadCD('Hayato Sumino', 'Rachmaninov Adagio', 'OS4NsKxXGDc')">CD 1: Rachmaninov - Symphony No. 2 (Adagio)</button>
-        <button class="btn-control" onclick="loadCD('Beethoven', 'Moonlight Sonata', '4Tr0otuiQuU')">CD 2: Beethoven - Moonlight Sonata</button>
-        <button class="btn-control" onclick="loadCD('Chopin', 'Nocturne Op. 9 No. 2', '9E6c8y5Bqps')">CD 3: Chopin - Nocturne</button>
-    </div>
+    <p id="nowPlaying" style="font-style: italic; color: #444; font-size: 16px; margin-bottom: 10px;">Status: Stopped</p>
 
     <!-- Playback Controls -->
     <div class="controls">
-        <button class="btn-control" onclick="stopMusic()" style="background: #212529; color: white;">Stop Music</button>
-        <button class="btn-control" onclick="playRandomCD()">🎲 Random Classical Track</button>
+        <button class="btn-control" onclick="togglePlay()" style="background: #212529; color: white;">Play / Pause</button>
+        <button class="btn-control" onclick="resetPlayer()">Eject CD</button>
     </div>
 
-    <!-- Embedded YouTube Player -->
-    <div id="youtube-container">
-        <iframe id="ytPlayer" width="300" height="80" src="" frameborder="0" allow="autoplay"></iframe>
-    </div>
+    <!-- Local Audio Element -->
+    <audio id="audioPlayer" src="rach2-iii.mp3" onended="stopRotation()"></audio>
 
     <script>
+        const audio = document.getElementById('audioPlayer');
         const vinyl = document.getElementById('vinylRecord');
         const cdLabel = document.getElementById('cdLabel');
         const nowPlaying = document.getElementById('nowPlaying');
-        const ytPlayer = document.getElementById('ytPlayer');
+        const turntable = document.getElementById('turntable');
+        let isPlaying = false;
 
-        const cds = [
-            { composer: 'Hayato Sumino', title: 'Rachmaninov Adagio', id: 'OS4NsKxXGDc' },
-            { composer: 'Beethoven', title: 'Moonlight Sonata', id: '4Tr0otuiQuU' },
-            { composer: 'Chopin', title: 'Nocturne Op. 9', id: '9E6c8y5Bqps' }
-        ];
-
-        function loadCD(composer, title, videoId) {
-            ytPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
-            cdLabel.innerHTML = `${composer}<br>${title}`;
-            nowPlaying.innerText = `Playing: ${composer} - ${title}`;
-            vinyl.classList.add('spinning');
+        function allowDrop(ev) {
+            ev.preventDefault();
+            turntable.classList.add('drag-over');
         }
 
-        function stopMusic() {
-            ytPlayer.src = ""; 
+        function removeHighlight(ev) {
+            turntable.classList.remove('drag-over');
+        }
+
+        function drag(ev) {
+            ev.dataTransfer.setData("text", "rach2");
+        }
+
+        function dropCD(ev) {
+            ev.preventDefault();
+            turntable.classList.remove('drag-over');
+            loadAndPlayTrack();
+        }
+
+        function loadAndPlayTrack() {
+            cdLabel.innerHTML = `Rachmaninov<br>Adagio`;
+            nowPlaying.innerText = `Playing: Rachmaninov - Symphony No. 2 (Adagio)`;
+            audio.play().then(() => {
+                vinyl.classList.add('spinning');
+                isPlaying = true;
+            }).catch(error => {
+                console.log("Playback error:", error);
+                nowPlaying.innerText = `Paused (Click Play)`;
+            });
+        }
+
+        function togglePlay() {
+            if (audio.paused) {
+                audio.play().then(() => {
+                    vinyl.classList.add('spinning');
+                    isPlaying = true;
+                    nowPlaying.innerText = `Playing: Rachmaninov - Symphony No. 2 (Adagio)`;
+                }).catch(err => {
+                    alert("Please click Play/Pause after interacting with the page.");
+                });
+            } else {
+                audio.pause();
+                vinyl.classList.remove('spinning');
+                isPlaying = false;
+                nowPlaying.innerText = `Paused`;
+            }
+        }
+
+        function resetPlayer() {
+            audio.pause();
+            audio.currentTime = 0;
             vinyl.classList.remove('spinning');
-            cdLabel.innerHTML = "No CD Loaded";
+            isPlaying = false;
+            cdLabel.innerHTML = "Drop CD Here";
             nowPlaying.innerText = `Status: Stopped`;
         }
 
-        function playRandomCD() {
-            const randomIndex = Math.floor(Math.random() * cds.length);
-            const selectedCD = cds[randomIndex];
-            loadCD(selectedCD.composer, selectedCD.title, selectedCD.id);
+        function stopRotation() {
+            vinyl.classList.remove('spinning');
+            isPlaying = false;
+            nowPlaying.innerText = `Finished`;
         }
     </script>
 </body>
