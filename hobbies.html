@@ -147,7 +147,7 @@
             font-weight: bold;
             text-align: center;
             padding: 2px;
-            transition: width 0.3s, height 0.3s;
+            transition: width 0.3s, height 0.3s, font-size 0.3s;
         }
 
         /* Growing puzzle effect when hovering over turntable */
@@ -236,9 +236,9 @@
         <button class="btn-control" onclick="resetPlayer()">Eject CD</button>
     </div>
 
-    <!-- Audio Elements -->
+    <!-- Audio Elements (Local files for both) -->
     <audio id="audioRach" src="rach2-iii.mp3" onended="stopRotation()"></audio>
-    <audio id="audioMahler" src="https://docs.google.com/uc?export=download&id=1T_QwKyZAZDfUUbj4B6w6VsGpTpKQoaKu" crossorigin="anonymous" onended="stopRotation()"></audio>
+    <audio id="audioMahler" src="mahler9.mp3" onended="stopRotation()"></audio>
 
     <script>
         let currentAudio = null;
