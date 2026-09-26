@@ -120,13 +120,12 @@
             justify-content: center;
             cursor: grab;
             user-select: none;
-            transition: transform 0.2s, box-shadow 0.2s;
+            transition: transform 0.2s, box-shadow 0.2s, width 0.3s, height 0.3s;
             border: 2px solid #444;
         }
 
         .draggable-cd:active {
             cursor: grabbing;
-            transform: scale(0.95);
         }
 
         .draggable-cd:hover {
@@ -148,6 +147,19 @@
             font-weight: bold;
             text-align: center;
             padding: 2px;
+            transition: width 0.3s, height 0.3s;
+        }
+
+        /* Growing puzzle effect when hovering over turntable */
+        .turntable-container.drag-over .draggable-cd {
+            width: 280px;
+            height: 280px;
+        }
+
+        .turntable-container.drag-over .cd-inner-label {
+            width: 100px;
+            height: 100px;
+            font-size: 10px;
         }
 
         .controls {
@@ -187,7 +199,7 @@
         Outside academics, I play the violin as part of UCL Symphony Orchestra, and I love listening to music :) Below are some of my favourite pieces!
     </p>
 
-    <p style="color: #666; margin-bottom: 15px;">Drag a round CD onto the turntable below to play:</p>
+    <p style="color: #666; margin-bottom: 15px;">Drag a round CD onto the turntable below to snap it into place:</p>
 
     <!-- CD Shelf containing both interactive CDs -->
     <div class="cd-shelf">
@@ -224,7 +236,7 @@
         <button class="btn-control" onclick="resetPlayer()">Eject CD</button>
     </div>
 
-    <!-- Audio Elements (Rachmaninov local, Mahler via Google Drive direct link) -->
+    <!-- Audio Elements -->
     <audio id="audioRach" src="rach2-iii.mp3" onended="stopRotation()"></audio>
     <audio id="audioMahler" src="https://docs.google.com/uc?export=download&id=1T_QwKyZAZDfUUbj4B6w6VsGpTpKQoaKu" crossorigin="anonymous" onended="stopRotation()"></audio>
 
