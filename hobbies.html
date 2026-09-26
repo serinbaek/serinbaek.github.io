@@ -93,13 +93,26 @@
             animation: spin 3s linear infinite;
         }
 
+        /* CD Shelf / Container Layout */
+        .cd-shelf {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin: 20px 0;
+            flex-wrap: wrap;
+        }
+
+        .cd-wrapper {
+            text-align: center;
+        }
+
         /* Round Draggable CD */
         .draggable-cd {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             background: radial-gradient(circle, #111 30%, #222 31%, #111 32%, #000 65%, #222 66%, #111 70%);
             border-radius: 50%;
-            margin: 20px auto;
+            margin: 0 auto 8px auto;
             position: relative;
             box-shadow: 0 6px 15px rgba(0,0,0,0.3);
             display: flex;
@@ -118,11 +131,12 @@
 
         .draggable-cd:hover {
             box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+            transform: translateY(-3px);
         }
 
         .cd-inner-label {
-            width: 42px;
-            height: 42px;
+            width: 38px;
+            height: 38px;
             background: #b22222;
             border-radius: 50%;
             border: 2px dashed #fff;
@@ -130,7 +144,7 @@
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 8px;
+            font-size: 7px;
             font-weight: bold;
             text-align: center;
             padding: 2px;
@@ -165,18 +179,33 @@
         <a href="projects.html">Projects</a>
         <a href="hobbies.html" class="active">Hobbies</a>
     </div>
+
+    <h1 style="font-size: 32px; margin-bottom: 15px;"><strong>Hobbies</strong></h1>
     
     <!-- Personal Intro Paragraph -->
     <p style="font-size: 16px; text-align: left; line-height: 1.6; margin-bottom: 30px;">
         Outside academics, I play the violin as part of UCL Symphony Orchestra, and I love listening to music :) Below are some of my favourite pieces!
     </p>
 
-    <p style="color: #666; margin-bottom: 5px;">Drag the round CD onto the turntable below to play!</p>
-    <p style="font-size: 13px; color: #888; margin-bottom: 15px;">Rachmaninov: Symphony No. 2 (III. Adagio)</p>
+    <p style="color: #666; margin-bottom: 15px;">Drag a round CD onto the turntable below to play:</p>
 
-    <!-- Round Draggable CD -->
-    <div class="draggable-cd" draggable="true" id="cdItem" ondragstart="drag(event)" title="Drag onto turntable">
-        <div class="cd-inner-label">Rach 2</div>
+    <!-- CD Shelf containing both interactive CDs -->
+    <div class="cd-shelf">
+        <div class="cd-wrapper">
+            <div class="draggable-cd" draggable="true" id="cdRach" ondragstart="drag(event, 'rach2')" title="Drag onto turntable">
+                <div class="cd-inner-label">Rach 2</div>
+            </div>
+            <p style="font-size: 13px; font-weight: bold; margin: 0;">Rachmaninov: Symphony No. 2</p>
+            <p style="font-size: 11px; color: #666; margin: 2px 0 0 0;">III. Adagio</p>
+        </div>
+
+        <div class="cd-wrapper">
+            <div class="draggable-cd" draggable="true" id="cdMahler" ondragstart="drag(event, 'mahler9')" title="Drag onto turntable">
+                <div class="cd-inner-label" style="background: #1f4e78;">Mahler 9</div>
+            </div>
+            <p style="font-size: 13px; font-weight: bold; margin: 0;">Mahler: Symphony No. 9</p>
+            <p style="font-size: 11px; color: #666; margin: 2px 0 0 0;">Adagio</p>
+        </div>
     </div>
 
     <!-- Turntable Player (Drop Zone) -->
@@ -195,16 +224,17 @@
         <button class="btn-control" onclick="resetPlayer()">Eject CD</button>
     </div>
 
-    <!-- Local Audio Element -->
-    <audio id="audioPlayer" src="rach2-iii.mp3" onended="stopRotation()"></audio>
+    <!-- Audio Elements (Rachmaninov local, Mahler via Google Drive direct link) -->
+    <audio id="audioRach" src="rach2-iii.mp3" onended="stopRotation()"></audio>
+    <audio id="audioMahler" src="https://docs.google.com/uc?export=download&id=1T_QwKyZAZDfUUbj4B6w6VsGpTpKQoaKu" crossorigin="anonymous" onended="stopRotation()"></audio>
 
     <script>
-        const audio = document.getElementById('audioPlayer');
+        let currentAudio = null;
         const vinyl = document.getElementById('vinylRecord');
         const cdLabel = document.getElementById('cdLabel');
         const nowPlaying = document.getElementById('nowPlaying');
         const turntable = document.getElementById('turntable');
-        let isPlaying = false;
+        let activeTrackName = "";
 
         function allowDrop(ev) {
             ev.preventDefault();
@@ -215,57 +245,79 @@
             turntable.classList.remove('drag-over');
         }
 
-        function drag(ev) {
-            ev.dataTransfer.setData("text", "rach2");
+        function drag(ev, trackKey) {
+            ev.dataTransfer.setData("text", trackKey);
         }
 
         function dropCD(ev) {
             ev.preventDefault();
             turntable.classList.remove('drag-over');
-            loadAndPlayTrack();
+            const trackKey = ev.dataTransfer.getData("text");
+            loadAndPlayTrack(trackKey);
         }
 
-        function loadAndPlayTrack() {
-            cdLabel.innerHTML = `Rachmaninov<br>Adagio`;
-            nowPlaying.innerText = `Playing: Rachmaninov - Symphony No. 2 (Adagio)`;
-            audio.play().then(() => {
-                vinyl.classList.add('spinning');
-                isPlaying = true;
-            }).catch(error => {
-                console.log("Playback error:", error);
-                nowPlaying.innerText = `Paused (Click Play)`;
-            });
+        function loadAndPlayTrack(trackKey) {
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
+
+            if (trackKey === 'rach2') {
+                currentAudio = document.getElementById('audioRach');
+                cdLabel.innerHTML = `Rachmaninov<br>Adagio`;
+                cdLabel.style.background = '#b22222';
+                activeTrackName = "Rachmaninov - Symphony No. 2 (III. Adagio)";
+            } else if (trackKey === 'mahler9') {
+                currentAudio = document.getElementById('audioMahler');
+                cdLabel.innerHTML = `Mahler<br>Adagio`;
+                cdLabel.style.background = '#1f4e78';
+                activeTrackName = "Mahler - Symphony No. 9 (Adagio)";
+            }
+
+            if (currentAudio) {
+                nowPlaying.innerText = `Playing: ${activeTrackName}`;
+                currentAudio.play().then(() => {
+                    vinyl.classList.add('spinning');
+                }).catch(error => {
+                    console.log("Playback error:", error);
+                    nowPlaying.innerText = `Paused (Click Play)`;
+                });
+            }
         }
 
         function togglePlay() {
-            if (audio.paused) {
-                audio.play().then(() => {
+            if (!currentAudio) {
+                alert('Please drop a CD onto the turntable first!');
+                return;
+            }
+            if (currentAudio.paused) {
+                currentAudio.play().then(() => {
                     vinyl.classList.add('spinning');
-                    isPlaying = true;
-                    nowPlaying.innerText = `Playing: Rachmaninov - Symphony No. 2 (Adagio)`;
+                    nowPlaying.innerText = `Playing: ${activeTrackName}`;
                 }).catch(err => {
                     alert("Please click Play/Pause after interacting with the page.");
                 });
             } else {
-                audio.pause();
+                currentAudio.pause();
                 vinyl.classList.remove('spinning');
-                isPlaying = false;
                 nowPlaying.innerText = `Paused`;
             }
         }
 
         function resetPlayer() {
-            audio.pause();
-            audio.currentTime = 0;
+            if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+            }
             vinyl.classList.remove('spinning');
-            isPlaying = false;
+            currentAudio = null;
             cdLabel.innerHTML = "Drop CD Here";
+            cdLabel.style.background = '#b22222';
             nowPlaying.innerText = `Status: Stopped`;
         }
 
         function stopRotation() {
             vinyl.classList.remove('spinning');
-            isPlaying = false;
             nowPlaying.innerText = `Finished`;
         }
     </script>
