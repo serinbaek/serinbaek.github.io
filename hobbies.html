@@ -212,11 +212,11 @@
         </div>
 
         <div class="cd-wrapper">
-            <div class="draggable-cd" draggable="true" id="cdMahler" ondragstart="drag(event, 'mahler9')" title="Drag onto turntable">
-                <div class="cd-inner-label" style="background: #1f4e78;">Mahler 9</div>
+            <div class="draggable-cd" draggable="true" id="cdRavel" ondragstart="drag(event, 'ravel')" title="Drag onto turntable">
+                <div class="cd-inner-label" style="background: #1f4e78;">Ravel</div>
             </div>
-            <p style="font-size: 13px; font-weight: bold; margin: 0;">Mahler: Symphony No. 9</p>
-            <p style="font-size: 11px; color: #666; margin: 2px 0 0 0;">Adagio</p>
+            <p style="font-size: 13px; font-weight: bold; margin: 0;">Ravel: Pavane pour une infante</p>
+            <p style="font-size: 11px; color: #666; margin: 2px 0 0 0;">défunte, M.19</p>
         </div>
     </div>
 
@@ -236,9 +236,9 @@
         <button class="btn-control" onclick="resetPlayer()">Eject CD</button>
     </div>
 
-    <!-- Audio Elements (Local files for both) -->
+    <!-- Audio Elements -->
     <audio id="audioRach" src="rach2-iii.mp3" onended="stopRotation()"></audio>
-    <audio id="audioMahler" src="mahler9.mp3" onended="stopRotation()"></audio>
+    <audio id="audioRavel" src="Ravel.mp3" onended="stopRotation()"></audio>
 
     <script>
         let currentAudio = null;
@@ -279,11 +279,11 @@
                 cdLabel.innerHTML = `Rachmaninov<br>Adagio`;
                 cdLabel.style.background = '#b22222';
                 activeTrackName = "Rachmaninov - Symphony No. 2 (III. Adagio)";
-            } else if (trackKey === 'mahler9') {
-                currentAudio = document.getElementById('audioMahler');
-                cdLabel.innerHTML = `Mahler<br>Adagio`;
+            } else if (trackKey === 'ravel') {
+                currentAudio = document.getElementById('audioRavel');
+                cdLabel.innerHTML = `Ravel<br>Pavane`;
                 cdLabel.style.background = '#1f4e78';
-                activeTrackName = "Mahler - Symphony No. 9 (Adagio)";
+                activeTrackName = "Ravel: Pavane pour une infante défunte, M.19";
             }
 
             if (currentAudio) {
