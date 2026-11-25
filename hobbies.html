@@ -204,10 +204,10 @@
     <!-- CD Shelf containing both interactive CDs -->
     <div class="cd-shelf">
         <div class="cd-wrapper">
-            <div class="draggable-cd" draggable="true" id="cdRachmaninov" ondragstart="drag(event, 'Rachmaninov')" title="Drag onto turntable">
-                <div class="cd-inner-label">Rachmaninov</div>
+            <div class="draggable-cd" draggable="true" id="cdRachmaninoff" ondragstart="drag(event, 'Rachmaninoff')" title="Drag onto turntable">
+                <div class="cd-inner-label">Rachmaninoff</div>
             </div>
-            <p style="font-size: 13px; font-weight: bold; margin: 0;">Rachmaninov: Symphony No. 2</p>
+            <p style="font-size: 13px; font-weight: bold; margin: 0;">Rachmaninoff: Symphony No. 2</p>
             <p style="font-size: 11px; color: #666; margin: 2px 0 0 0;">III. Adagio</p>
         </div>
 
@@ -273,11 +273,11 @@
                 currentAudio.currentTime = 0;
             }
 
-            if (trackKey === 'Rachmaninov') {
+            if (trackKey === 'Rachmaninoff') {
                 currentAudio = document.getElementById('audioRach');
-                cdLabel.innerHTML = `Rachmaninov<br>Adagio`;
+                cdLabel.innerHTML = `Rachmaninoff<br>Adagio`;
                 cdLabel.style.background = '#b22222';
-                activeTrackName = "Rachmaninov - Symphony No. 2 (III. Adagio)";
+                activeTrackName = "Rachmaninoff - Symphony No. 2 (III. Adagio)";
             } else if (trackKey === 'ravel') {
                 currentAudio = document.getElementById('audioRavel');
                 cdLabel.innerHTML = `Ravel<br>Pavane`;
