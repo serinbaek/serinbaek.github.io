@@ -1,147 +1,243 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en-GB">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Serin Baek</title>
+    <meta name="description" content="Serin Baek, MSci Pharmacology student at UCL researching membrane voltage in human airway epithelial cells.">
+    <title>Serin Baek | Pharmacology and Research</title>
     <link rel="icon" href="logo.png" type="image/png">
+
     <style>
-        /* Modern Navigation Bar Styling */
-        .nav-bar {
-            margin-bottom: 40px;
-            background: #f8f9fa;
-            display: inline-block;
-            padding: 8px 16px;
-            border-radius: 30px;
-            border: 1px solid #eaeaea;
+        :root {
+            --text: #202a29;
+            --muted: #4e5e5a;
+            --accent: #205c50;
+            --accent-hover: #17473d;
+            --surface: #eef4f1;
+            --border: #d8e2dd;
+            --background: #fcfcfa;
         }
-        .nav-bar a {
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            color: var(--text);
+            background: var(--background);
+            font-family: Arial, sans-serif;
+            line-height: 1.65;
+        }
+
+        .page {
+            width: min(100% - 2rem, 56rem);
+            margin-inline: auto;
+        }
+
+        a {
+            color: var(--accent);
+            text-underline-offset: 0.18em;
+        }
+
+        a:focus-visible {
+            outline: 3px solid var(--accent);
+            outline-offset: 4px;
+        }
+
+        .site-header {
+            padding-block: 1.5rem;
+        }
+
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.25rem;
+            margin: 0;
+            padding: 0;
+            list-style: none;
+        }
+
+        .site-nav a {
+            display: block;
+            padding: 0.55rem 0.9rem;
+            border-radius: 999px;
+            color: var(--muted);
             text-decoration: none;
-            font-size: 16px;
-            color: #666;
-            padding: 8px 16px;
-            border-radius: 20px;
-            transition: all 0.2s ease-in-out;
-            margin: 0 4px;
         }
-        .nav-bar a:hover {
-            color: #000;
-            background: #e9ecef;
+
+        .site-nav a:hover,
+        .site-nav a[aria-current="page"] {
+            color: var(--accent);
+            background: var(--surface);
         }
-        /* Pressed-in / Dented active button look */
-        .nav-bar a.active {
-            color: #333;
-            background: #e2e6ea;
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.15);
+
+        .site-nav a[aria-current="page"] {
             font-weight: bold;
         }
 
-        /* Layout for Photo and Bubble */
-        .profile-container {
-            position: relative;
-            display: inline-block; 
-            margin-bottom: 20px;
+        .hero {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 16rem);
+            align-items: center;
+            gap: clamp(1.5rem, 5vw, 3.5rem);
+            padding-block: 2rem 3rem;
         }
 
-        /* Speech Bubble Styling */
-        .speech-bubble {
-            position: absolute;
-            top: 8px;   
-            right: 5%;  
-            background: #fcfaf0;
-            border-radius: 15px;
-            padding: 15px 25px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); 
-            z-index: 10;
-        }
-        
-        .speech-bubble:after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: -15px;
-            width: 0;
-            height: 0;
-            border: 15px solid transparent;
-            border-right-color: #fcfaf0;
-            border-left: 0;
-            margin-top: -15px;
+        h1,
+        h2 {
+            line-height: 1.2;
         }
 
-        /* Typewriter animation */
-        .typewriter p {
-            overflow: hidden; 
-            border-right: 0.15em solid black; 
-            white-space: nowrap; 
-            margin: 0; 
-            font-size: 22px;
-            font-weight: normal; 
-            font-family: 'Courier New', Courier, monospace; 
-            width: 0;
-            animation: 
-                typing 1.2s steps(10, end) forwards,
-                blink-caret 0.75s step-end infinite;
+        h1 {
+            margin: 0;
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            letter-spacing: -0.04em;
         }
 
-        @keyframes typing {
-            from { width: 0 }
-            to { width: 8.5ch }
+        .subtitle {
+            margin: 0.4rem 0 1.25rem;
+            color: var(--muted);
+            font-size: 1.05rem;
         }
 
-        @keyframes blink-caret {
-            from, to { border-color: transparent }
-            50% { border-color: black; }
+        .portrait {
+            display: block;
+            width: 100%;
+            height: auto;
+            border-radius: 1.25rem;
+        }
+
+        .profile-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            margin-top: 1.5rem;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 0.55rem 1rem;
+            border: 1px solid var(--accent);
+            border-radius: 0.5rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .button:hover {
+            background: var(--surface);
+        }
+
+        .button-primary {
+            color: #fff;
+            background: var(--accent);
+        }
+
+        .button-primary:hover {
+            background: var(--accent-hover);
+        }
+
+        .journey {
+            padding-block: 2.25rem 3rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .journey h2 {
+            margin: 0 0 1rem;
+            font-size: 1.7rem;
+        }
+
+        .journey p {
+            max-width: 68ch;
+            margin: 0 0 1rem;
+        }
+
+        @media (max-width: 42rem) {
+            .hero {
+                grid-template-columns: 1fr;
+                padding-block: 1rem 2rem;
+            }
+
+            .portrait {
+                max-width: 14rem;
+            }
         }
     </style>
 </head>
-<body style="font-family: Arial, sans-serif; text-align: center; max-width: 800px; margin: 0 auto; padding: 20px;">
-    
-    <!-- Navigation Menu with Pill Design -->
-    <div class="nav-bar">
-        <a href="index.html" class="active">About</a>
-        <a href="bsc-thesis.html">BSc Thesis</a>
-        <a href="projects.html">Projects</a>
-        <a href="hobbies.html">Hobbies</a>
-    </div>
 
-    <!-- Profile Container: Photo and Overlapping Bubble -->
-    <div class="profile-container">
-        <!-- Profile Photo -->
-        <img src="Serin_profile.jpg" alt="Serin Baek" width="500" style="border-radius: 20%; display: block;">
+<body>
+    <header class="site-header page">
+        <nav aria-label="Main navigation">
+            <ul class="site-nav">
+                <li><a href="index.html" aria-current="page">About</a></li>
+                <li><a href="projects.html">Research</a></li>
+                <li><a href="bsc-thesis.html">BSc Thesis</a></li>
+                <li><a href="hobbies.html">Hobbies</a></li>
+            </ul>
+        </nav>
+    </header>
 
-        <!-- Speech Bubble -->
-        <div class="speech-bubble">
-            <div class="typewriter">
-                <p>Welcome!</p>
+    <main class="page">
+        <section class="hero" aria-labelledby="profile-name">
+            <div>
+                <h1 id="profile-name">Serin Baek</h1>
+                <p class="subtitle">Final-year MSci Pharmacology student at University College London</p>
+
+                <p>
+                    I’m seeking a PhD position. In my
+                    <a href="projects.html">master’s research</a>, I use
+                    fluorescence lifetime imaging and computational modelling
+                    to study how membrane voltage varies across cell types and
+                    between the apical and basolateral membranes of primary
+                    human nasal epithelial cells. I want to understand how
+                    changes in these electrical properties contribute to
+                    airway disease.
+                </p>
+
+                <div class="profile-links">
+                    <a class="button button-primary" href="CV.pdf">View CV (PDF)</a>
+                    <a class="button" href="https://www.linkedin.com/in/serin-baek-0a2bb2292">LinkedIn</a>
+                </div>
             </div>
-        </div>
-    </div>
 
-    <h1><strong>Serin Baek</strong></h1>
-    
-    <p style="font-size: 16px; text-align: left; line-height: 1.5;">I’m a final-year MSci Pharmacology student at University College London, seeking a PhD position. My master’s research investigates how membrane voltage varies across cell types and between the apical and basolateral membranes of primary human nasal epithelial cells. I combine fluorescence lifetime imaging with computational modelling to study how individual cells contribute to the electrical behaviour of the airway epithelium. Ultimately, I want to understand how changes in these electrical properties contribute to airway disease. 
-</p>
+            <img class="portrait" src="Serin_profile.jpg" alt="Portrait of Serin Baek">
+        </section>
 
-    <p style="margin-top: 30px;">
-        <a href="CV.pdf" target="_blank"><button style="padding: 12px 24px; font-size: 16px; cursor: pointer; margin-right: 15px;">CV</button></a>
-        <a href="https://www.linkedin.com/in/serin-baek-0a2bb2292" target="_blank"><button style="padding: 12px 24px; font-size: 16px; cursor: pointer;">LinkedIn</button></a>
-    </p>
+        <section class="journey" aria-labelledby="journey-heading">
+            <h2 id="journey-heading">My Journey</h2>
 
-    <!-- Divider Line -->
-    <hr style="margin: 50px 0 30px 0; border: 0; border-top: 1px solid #ddd;">
+            <p>
+                My interest in pharmacology began during my gap year, when I
+                volunteered at a mobile clinic in Cambodia. Meeting patients
+                who had few effective treatment options made me want to
+                understand how diseases develop and how that knowledge could
+                lead to new therapies. Soon afterwards, I applied to study
+                pharmacology at UCL.
+            </p>
 
-    <!-- Personal Story Section -->
-    <div style="text-align: left;">
-        <h2 style="font-size: 22px; margin-bottom: 15px;">My Journey</h2>
-        
-        <p style="font-size: 16px; line-height: 1.6; margin-bottom: 15px;">
-My interest in pharmacology began during my gap year, when I volunteered at a mobile clinic in Cambodia. Meeting patients who had few effective treatment options made me want to understand how diseases develop and how that knowledge could lead to new therapies. Soon afterwards, I applied to study pharmacology at UCL.
-        
-        <p style="font-size: 16px; line-height: 1.6;">
-When I returned to Cambodia a year later, I spent time in an oncology ward. I remember sitting in a waiting room filled with conversation and laughter. Only later did I learn how advanced many of the patients’ cancers were. I wondered what earlier diagnosis and better access to treatment might have meant for them. Back in London, conversations with people experiencing homelessness showed me how difficult it can be to access care even when services are nearby.        </p>
+            <p>
+                When I returned to Cambodia a year later, I spent time in an
+                oncology ward. I remember sitting in a waiting room filled with
+                conversation and laughter. Only later did I learn how advanced
+                many of the patients’ cancers were. I wondered what earlier
+                diagnosis and better access to treatment might have meant for
+                them. Back in London, conversations with people experiencing
+                homelessness showed me how difficult it can be to access care
+                even when services are nearby.
+            </p>
 
-         <p style="font-size: 16px; line-height: 1.6;">
-At Cambridge, I investigated biomarkers for detecting Barrett’s oesophagus without an endoscopy, drawn to the possibility of making early detection more accessible. At UCL, studying how electrical properties vary between airway epithelial cells has made me curious about how changes at the level of individual cells contribute to diseases such as cystic fibrosis. I want to pursue a PhD to investigate these kinds of questions and build the expertise to contribute to better ways of detecting and treating disease.    </div>
-    
+            <p>
+                At Cambridge, I investigated biomarkers for detecting Barrett’s
+                oesophagus without an endoscopy, drawn to the possibility of
+                making early detection more accessible. My work at UCL has
+                made me curious about how changes in individual cells
+                contribute to diseases such as cystic fibrosis. These projects
+                have shaped two questions I want to pursue in research: how
+                disease changes the way cells work, and how earlier detection
+                can become more accessible.
+            </p>
+        </section>
+    </main>
 </body>
 </html>
