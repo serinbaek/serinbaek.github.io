@@ -204,8 +204,8 @@
     <!-- CD Shelf containing both interactive CDs -->
     <div class="cd-shelf">
         <div class="cd-wrapper">
-            <div class="draggable-cd" draggable="true" id="cdRach" ondragstart="drag(event, 'rach2')" title="Drag onto turntable">
-                <div class="cd-inner-label">Rach 2</div>
+            <div class="draggable-cd" draggable="true" id="cdRachmaninov" ondragstart="drag(event, 'Rachmaninov')" title="Drag onto turntable">
+                <div class="cd-inner-label">Rachmaninov</div>
             </div>
             <p style="font-size: 13px; font-weight: bold; margin: 0;">Rachmaninov: Symphony No. 2</p>
             <p style="font-size: 11px; color: #666; margin: 2px 0 0 0;">III. Adagio</p>
@@ -273,7 +273,7 @@
                 currentAudio.currentTime = 0;
             }
 
-            if (trackKey === 'rach2') {
+            if (trackKey === 'Rachmaninov') {
                 currentAudio = document.getElementById('audioRach');
                 cdLabel.innerHTML = `Rachmaninov<br>Adagio`;
                 cdLabel.style.background = '#b22222';
